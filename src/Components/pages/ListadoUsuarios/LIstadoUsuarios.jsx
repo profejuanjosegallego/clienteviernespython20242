@@ -42,16 +42,14 @@ export function ListadoUsuarios(){
 
     //Programo el useeffect para garantizar que llamare al servicio
     //y voy a trael los datos
-    useEffect(function(){},[
-        //ACA SE LLAMA AL SERVICIO (back)
+    useEffect(function() {
+       
         buscarUsuarios()
-        .then(function(respuestaBack){
-            //console.log(respuestaBack)
-            setDatosApi(respuestaBack)
-            setEstadoCarga(false)
-            
-        })
-    ])
+            .then(function(respuestaBack) {
+                setDatosApi(respuestaBack);
+                setEstadoCarga(false); 
+            }) 
+    }, []) 
 
     if(estadoCarga==true){
         return(
