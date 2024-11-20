@@ -1,4 +1,5 @@
 import { useState,useEffect } from "react";
+import {buscarUsuarios} from "../../../services/serviciosUsuario.js"
 export function ListadoUsuarios(){
 
     //SIMULANDO UN CONJUNTO DE DATOS QUE VIENE DEL BACK
@@ -41,53 +42,65 @@ export function ListadoUsuarios(){
 
     //Programo el useeffect para garantizar que llamare al servicio
     //y voy a trael los datos
-    /*useEffect(function(){},[
+    useEffect(function(){},[
         //ACA SE LLAMA AL SERVICIO (back)
-        function(){
-             //SE CARGA LA VARIABLE DE ESTADO CON LOS DATOS SERVICIO
-            setDatosApi(usuarios)
-            //SE CAMBIA LA VARIABLE DE ESTADO DE LA CARGA
+        buscarUsuarios()
+        .then(function(respuestaBack){
+            //console.log(respuestaBack)
+            setDatosApi(respuestaBack)
             setEstadoCarga(false)
-        }
-    ])*/
+            
+        })
+    ])
 
+    if(estadoCarga==true){
+        return(
+            <>  
+                <h3>Estamos cargando....</h3>
+            </>
+        )
 
-    return(
+    }else{
+        return(
 
-        <>
-
-
-            <br /><br /><br /><br /><br />
-            {
-                console.log(usuarios)
-            }
-
-            <h3>LISTADO DE USUARIOS</h3>
-            <div className="container">
-                <div className="row row-cols-1 row-cols-md-3 g-3">
-
-                {
-                //Renderizando un arreglo de objetos
-                    usuarios.map(function(usuario){
-                        return(
-                            <div className="col">
-                                <div className="card h-100 shadow p-5">
-                                    <h5>{usuario.nombre}</h5>
-                                    <h4>Ciudad: {usuario.ciudad}</h4>
+            <>
+    
+    
+                <br /><br /><br /><br /><br />
+            
+                <h3>LISTADO DE USUARIOS</h3>
+                <div className="container">
+                    <div className="row row-cols-1 row-cols-md-3 g-3">
+                   
+    
+                    {
+                        
+                    //Renderizando un arreglo de objetos
+                        datosAPI.map(function(usuario){
+                            return(
+                                <div className="col">
+                                    <div className="card h-100 shadow p-5">
+                                        <h5>{usuario.nombre}</h5>
+                                        <h4>Ciudad: {usuario.ciudad}</h4>
+                                    </div>
                                 </div>
-                            </div>
-                        )
-                    })
-                }
-
+                            )
+                        })
+                    }
+    
+                    </div>
                 </div>
-            </div>
-            
-            
+                
+                
+    
+            </>
+        )
+    
 
-        </>
-    )
+    }
 
+
+    
 
 
 
